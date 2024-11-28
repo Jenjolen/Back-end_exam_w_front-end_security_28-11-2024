@@ -21,7 +21,8 @@ return fetch(URL + "/auth/login/", options) // Vi fetcher vores URL + /auth/logi
 
 const fetchData = (urlPath, callback, method, addToken, body) => {
   const options = makeOptions(method, addToken, body);
-  return fetch(URL + urlPath, options).then(handleHttpErrors)
+  return fetch(URL + "/" + urlPath, options)
+  .then(handleHttpErrors)
   .then(data => {
     callback(data);
   })
@@ -33,11 +34,11 @@ const makeOptions= (method,addToken,body) =>{ {/* addToken er en boolean */  }
     method: method,
     headers: {
       "Content-type": "application/json",
-      'Accept': 'application/json',
+      Accept: 'application/json',
     }
   }
   if (addToken && loggedIn()) {
-    opts.headers["Authentication"] = `Baerer ${getToken()}`;
+    opts.headers["Authorization"] = `Baerer ${getToken()}`;
   }
   if (body) {
     opts.body = JSON.stringify(body);
